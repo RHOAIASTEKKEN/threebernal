@@ -1,0 +1,318 @@
+*,
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: #E6E6E6;
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+    font-size: 16px;
+}
+
+a:hover {
+    opacity: 0.5;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header,
+footer {
+    width: 100%;
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+nav {
+    width: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* *******************************************************CANVA**************************************************************************************** */
+
+.contain-canva {
+    background-color: #FFFFFF;
+    display: grid;
+    place-items: center;
+
+
+    .canva {
+        width: 95vw;
+        /* 70% of viewport width */
+        height: 50vh;
+        /* 50% of viewport height */
+        /* White background to make sure it's visible */
+        overflow: hidden;
+        /* Hide overflow to keep the canvas within bounds */
+        display: flex;
+        flex-direction: column;
+
+        i {
+            font-size: 30px;
+            animation: mouse 5s ease-in-out infinite;
+            position: relative;
+            padding: 30px 0;
+            left: 0;
+        }
+
+    }
+
+
+    .canva-info {
+        width: 80%;
+        height: 30vh;
+
+        button {
+            width: 172px;
+            padding: 10px;
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+
+        }
+
+        .btn-1,
+        .btn-2:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .btn-2,
+        .btn-1:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .btn-1:hover,
+        .btn-2:hover {
+            opacity: 0.75;
+        }
+
+        p {
+            width: 50%;
+            font-size: 20px;
+        }
+    }
+}
+
+/* ************************************************GALLERY*********************************************************************************************** */
+.gallery {
+    width: 100%;
+    height: 400px;
+    background-color: #3D3D43;
+    flex-direction: column;
+
+    h2,
+    p {
+        color: #E7E7E4;
+    }
+}
+
+.evo {
+    background-color: #E6E6E6;
+
+    h2,
+    p {
+        color: #000000;
+    }
+}
+
+
+.gallery,
+.evo {
+    text-align: center;
+
+    h2 {
+        font-size: 48px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+}
+
+.contact,
+.evo-last {
+    padding: 50px 0;
+}
+
+.contact {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    place-items: center;
+
+    article {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        i {
+            font-size: 30px;
+        }
+    }
+
+    .follow {
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr) !important;
+
+        p {
+            grid-column: 1/6;
+        }
+    }
+}
+
+/* ********************************************Footer*************************************************************************************************** */
+footer {
+    background-color: #3D3D43;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    section {
+        width: 300px;
+        display: flex;
+        gap: 15px;
+    }
+}
+
+footer,
+footer section a{
+    color: #E6E6E6;
+}
+
+/* ********************************************RESPONSIVE*************************************************************************************************** */
+
+@media (max-width: 840px) {
+    .contain-canva {
+
+        .canva-info {
+
+
+            p {
+                width: 100%;
+            }
+        }
+    }
+
+    .gallery,
+    .evo {
+        padding: 0 50px;
+
+        h2 {
+            font-size: 40px;
+        }
+
+        p {
+            font-size: 16px;
+        }
+    }
+
+    footer {
+        flex-direction: column;
+        padding: 10px 0;
+    }
+}
+
+@media (min-width: 550px) {
+    .menu {
+        display: none;
+    }
+}
+
+@media (max-width: 550px) {
+    header {
+        h1 {
+            width: 100%;
+        }
+    }
+
+
+    .menu {
+        display: grid;
+        place-items: center;
+        width: 50px !important;
+        height: 50px;
+        background-color: #0F0F10;
+        border-radius: 10px;
+        color: #707070;
+        cursor: pointer;
+    }
+
+    nav {
+        display: none;
+    }
+
+    .menu:hover {
+        opacity: 0.75;
+        color: #fff;
+    }
+
+    .navToggle {
+        z-index: 2;
+        width: 200px;
+        height: 30vh;
+        background-color: #E6E6E6;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+        gap: 10px;
+
+        a {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 25px;
+            text-align: center;
+
+        }
+
+        a:hover {
+            opacity: 0.5;
+            background-color: #aaa9a9;
+            color: #fefefe;
+        }
+    }
+}
+
+@media (max-width: 430px) {
+
+    .btn-2 {
+        margin-top: 10px !important;
+    }
+
+}
+
+@keyframes mouse {
+    0% {
+        left: 0;
+        display: block;
+    }
+
+    100% {
+        display: none;
+        left: calc(100% - 30px);
+        opacity: 0;
+    }
+}

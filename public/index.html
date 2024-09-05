@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Three.js 3D Model Example</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Automotive Innovations</h1>
+        <nav class="nav">
+            <a href="#">Gallery</a>
+            <a href="#">Timeline</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+        </nav>
+
+        <div class="menu">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="contain-canva">
+            <article class="canva">
+                <i class="fa-solid fa-hand-pointer"></i>
+            </article>
+            <div class="canva-info">
+                <p>Explore our cutting-edge 3D car models and immerse yourself in the rich history of automotive
+                    innovation.</p>
+
+                <button class="btn-1">Explorer Gallery</button>
+                <button class="btn-2">View Timeline</button>
+            </div>
+        </section>
+
+
+        <section class="gallery flex-center">
+            <h2>Explore Our 3D Car Gallery</h2>
+            <p>Discover our collection of cutting-edge 3D car models and customize them to your liking.</p>
+        </section>
+
+        <section class="evo gallery flex-center">
+            <h2>The Evolution of Automotive</h2>
+            <p>Explore the rich history of automotive innovation and how it has shaped the world we live in.</p>
+        </section>
+
+        <section class="gallery flex-center">
+            <h2>Automotive News and Insights</h2>
+            <p>Stay up-to-date with the latest news, trends, and innovations in the automotive industry.</p>
+        </section>
+
+        <div class="evo evo-last">
+            <h2>Get in Touch</h2>
+            <p>Have a question or want to learn more about our products and services? Contact us or follow us on social
+                media.</p>
+
+            <div class="contact">
+                <article>
+                    <i class="fa-regular fa-envelope"></i>
+                    <a href="">info@automotiveinnovations.com</a>
+                </article>
+                <article>
+                    <i class="fa-solid fa-phone"></i>
+                    <a href="">+1 (234) 567-890</a>
+                </article>
+                <article class="follow">
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <p>Follow us</p>
+                </article>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2024 Automotive Innovations. All rights reserved.</p>
+
+        <section>
+            <a href="">Privacy Policy</a>
+            <a href="">Terms of Service</a>
+            <a href="">Sitemap</a>
+        </section>
+    </footer>
+
+    <script src="/js/menu.js"></script>
+
+    <!-- Incluir Three.js desde un CDN -->
+    <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        // Basic scene setup
+        const scene = new THREE.Scene();
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+
+        // Add the canvas to the .canva section
+        const canvaElement = document.querySelector('.canva');
+        canvaElement.appendChild(renderer.domElement);
+
+        // Set initial size of the renderer
+        const setSize = () => {
+            const width = canvaElement.clientWidth;
+            const height = canvaElement.clientHeight;
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setClearColor(0xffffff); // Background color
+        };
+        setSize();
+
+        // Set up the camera
+        const camera = new THREE.PerspectiveCamera(75, canvaElement.clientWidth / canvaElement.clientHeight, 0.1, 1000);
+        camera.position.set(0, 10, 20);
+
+        // Add four point lights with increased intensity
+        const pointLight1 = new THREE.PointLight(0xffffff, 5, 100, 2); // Intensity increased to 5, decay set to 2
+        pointLight1.position.set(10, 10, 10);
+        scene.add(pointLight1);
+
+        const pointLight2 = new THREE.PointLight(0xffffff, 5, 100, 2); // Intensity increased to 5, decay set to 2
+        pointLight2.position.set(-20, 10, 10);
+        scene.add(pointLight2);
+
+        const pointLight3 = new THREE.PointLight(0xffffff, 5, 100, 2); // Intensity increased to 5, decay set to 2
+        pointLight3.position.set(10, -40, -10);
+        scene.add(pointLight3);
+
+        const pointLight4 = new THREE.PointLight(0xffffff, 5, 100, -1); // Intensity increased to 5, decay set to 2
+        pointLight4.position.set(-20, -40, 0);
+        scene.add(pointLight4);
+
+        // Load the 3D model and animations
+        const loader = new THREE.GLTFLoader();
+        let mixer;
+        loader.load('models/car.gltf', (gltf) => {
+            const model = gltf.scene;
+            scene.add(model);
+            model.scale.set(1, 1, 1); // Uniform scaling
+            model.position.set(0, 0, 0);
+
+            // Set up the animation mixer
+            mixer = new THREE.AnimationMixer(model);
+            gltf.animations.forEach((clip) => {
+                mixer.clipAction(clip).play();
+            });
+        }, undefined, (error) => {
+            console.error('Error loading model:', error);
+        });
+
+        // Add orbit controls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.25;
+        controls.enableZoom = true;
+
+        // Animation function
+        function animate() {
+            requestAnimationFrame(animate);
+            if (mixer) mixer.update(0.01);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Adjust renderer size and camera aspect ratio on window resize
+        window.addEventListener('resize', () => {
+            setSize();
+            camera.aspect = canvaElement.clientWidth / canvaElement.clientHeight;
+            camera.updateProjectionMatrix();
+        });
+
+    </script>
+</body>
+
+</html>
